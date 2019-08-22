@@ -8,6 +8,8 @@
 extern "C" {
 #endif
 #include "EXTERN.h"
+#undef get_context
+#undef get_thx
 #include "perl.h"
 #include "XSUB.h"
 #include "ppport.h"

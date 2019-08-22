@@ -33,7 +33,6 @@
 #undef sendto
 #undef seed
 #undef pause
-#undef get_context
 
 // these need to be included early for Win32 (listing it in Build.PL is not enough)
 #include <ostream>
