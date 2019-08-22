@@ -33,6 +33,7 @@
 #undef sendto
 #undef seed
 #undef pause
+#undef get_context
 
 // these need to be included early for Win32 (listing it in Build.PL is not enough)
 #include <ostream>
@@ -74,18 +75,18 @@ extern "C" {
 #include <TriangleMesh.hpp>
 
 namespace Slic3r {
-    
+
 template<class T>
-struct ClassTraits { 
+struct ClassTraits {
     static const char* name;
-    static const char* name_ref; 
+    static const char* name_ref;
 };
 
 // use this for typedefs for which the forward prototype
 // in REGISTER_CLASS won't work
 #define __REGISTER_CLASS(cname, perlname)                                            \
     template <>const char* ClassTraits<cname>::name = "Slic3r::" perlname;           \
-    template <>const char* ClassTraits<cname>::name_ref = "Slic3r::" perlname "::Ref"; 
+    template <>const char* ClassTraits<cname>::name_ref = "Slic3r::" perlname "::Ref";
 
 #define REGISTER_CLASS(cname,perlname)                                               \
     class cname;                                                                     \
@@ -110,7 +111,7 @@ SV* perl_to_SV_clone_ref(const T &t) {
     return sv;
 }
 
-template <class T> 
+template <class T>
 class Ref {
     T* val;
 public:
@@ -120,7 +121,7 @@ public:
     operator T*() const { return val; }
     static const char* CLASS() { return ClassTraits<T>::name_ref; }
 };
-  
+
 template <class T>
 class Clone {
     T* val;
@@ -169,9 +170,9 @@ class Filler
 {
     public:
     Filler() : fill(NULL) {};
-    ~Filler() { 
+    ~Filler() {
         if (fill != NULL) {
-            delete fill; 
+            delete fill;
             fill = NULL;
         }
     };
